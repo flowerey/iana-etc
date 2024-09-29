@@ -4,7 +4,7 @@
 <registry xmlns="http://www.iana.org/assignments" id="service-names-port-numbers">
   <title>Service Name and Transport Protocol Port Number Registry</title>
   <category>Service Names and Transport Protocol Port Numbers</category>
-  <updated>2024-09-12</updated>
+  <updated>2024-09-23</updated>
   <xref type="rfc" data="rfc6335"/>
   <expert>TCP/UDP: Joe Touch; Eliot Lear, Kumiko Ono, Wes Eddy, Brian Trammell, 
 Jana Iyengar, and Michael Scharf
@@ -88703,7 +88703,22 @@ common service discovery mechanisms.</note>
   </record>
   <record>
     <description>Unassigned</description>
-    <number>27011-27016</number>
+    <number>27011-27015</number>
+  </record>
+  <record date="2024-09-23">
+    <name>chlenix</name>
+    <protocol>tcp</protocol>
+    <assignee>
+      <xref type="person" data="Vlad_Bondarenko"/>
+    </assignee>
+    <description>Cloud hosting environment network</description>
+    <number>27016</number>
+    <xref type="person" data="Vlad_Bondarenko"/>
+  </record>
+  <record>
+    <protocol>udp</protocol>
+    <description>Reserved</description>
+    <number>27016</number>
   </record>
   <record date="2019-02-21">
     <name>mongodb</name>
@@ -93827,6 +93842,19 @@ common service discovery mechanisms.</note>
     </assignee>
     <description>The Bootstrapping Remote Secure Key Infrastructure Proxy</description>
 	<xref type="rfc" data="rfc8995"/>
+    <note>Defined TXT keys: None</note>
+    <xref type="person" data="IETF_Chair"/>
+  </record>
+  <record date="2024-09-23">
+    <name>brski-reg-cmp</name>
+    <protocol>tcp</protocol>
+    <assignee>
+      <xref type="person" data="IESG"/>
+    </assignee>
+    <description>Bootstrapping Remote Secure Key Infrastructure registrar with CMP
+      capabilities according to the Lightweight CMP Profile (LCMPP,
+      <xref type="rfc" data="rfc9483"/>)</description>
+	<xref type="draft" data="RFC-ietf-anima-brski-ae-13"/>
     <note>Defined TXT keys: None</note>
     <xref type="person" data="IETF_Chair"/>
   </record>
@@ -124966,10 +124994,10 @@ implementations.  See RFC 3692 for details.</footnote>
       <name>Vitaly Revsin</name>
       <uri>mailto:vitaly&amp;netapp.com</uri>
     </person>
-    <person id="Volodymyr_Bykov">
-      <name>Volodymyr_Bykov</name>
-      <uri>mailto:vbickov&amp;gmail.com</uri>
-      <updated>2016-11-23</updated>
+    <person id="Vlad_Bondarenko">
+      <name>Vlad Bondarenko</name>
+      <uri>mailto:bondarenko.vlad.univ&amp;gmail.com</uri>
+      <updated>2024-09-23</updated>
     </person>
     <person id="Vladimir_Legalov">
       <name>Vladimir Legalov</name>
@@ -125004,6 +125032,11 @@ implementations.  See RFC 3692 for details.</footnote>
       <name>Volker Wiegand</name>
       <uri>mailto:volker&amp;railduino.de</uri>
       <updated>2018-01-08</updated>
+    </person>
+    <person id="Volodymyr_Bykov">
+      <name>Volodymyr_Bykov</name>
+      <uri>mailto:vbickov&amp;gmail.com</uri>
+      <updated>2016-11-23</updated>
     </person>
     <person id="Volodymyr_Pavliuk">
       <name>Volodymyr Pavliuk</name>
