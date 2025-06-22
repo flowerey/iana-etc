@@ -4,7 +4,7 @@
 <registry xmlns="http://www.iana.org/assignments" id="service-names-port-numbers">
   <title>Service Name and Transport Protocol Port Number Registry</title>
   <category>Service Names and Transport Protocol Port Numbers</category>
-  <updated>2025-06-12</updated>
+  <updated>2025-06-18</updated>
   <xref type="rfc" data="rfc6335"/>
   <expert>TCP/UDP: Joe Touch; Eliot Lear, Kumiko Ono, Wes Eddy, Brian Trammell, 
 Jana Iyengar, and Michael Scharf
@@ -59741,8 +59741,23 @@ Further keys may be added in the future.</note>
     <xref type="person" data="Wei_Pan"/>
   </record>
   <record>
+    <protocol>tcp</protocol>
+    <description>Reserved</description>
+    <number>4793</number>
+  </record>
+  <record date="2025-06-16">
+    <name>uet</name>
+    <protocol>udp</protocol>
+    <assignee>
+      <xref type="person" data="Ultra_Ethernet_Consortium"/>
+    </assignee>
+    <description>Ultra Ethernet Transport</description>
+    <number>4793</number>
+    <xref type="person" data="Vivek_Kashyap"/>
+  </record>
+  <record>
     <description>Unassigned</description>
-    <number>4793-4799</number>
+    <number>4794-4799</number>
   </record>
   <record>
     <name>iims</name>
@@ -94771,7 +94786,7 @@ the target host and port where DNS Dynamic Update Service is provided for the na
     </assignee>
     <description>DNS-Based Service Discovery</description>
     <note>Defined TXT keys: None</note>
-    <xref type="draft" data="RFC-ietf-dnssd-srp-25"/>
+    <xref type="rfc" data="rfc9665"/>
     <xref type="person" data="IETF_Chair"/>
   </record>
   <record date="2024-04-12" updated="2024-09-05">
@@ -94782,7 +94797,7 @@ the target host and port where DNS Dynamic Update Service is provided for the na
     </assignee>
     <description>DNS-Based Service Discovery (TLS)</description>
     <note>Defined TXT keys: None</note>
-    <xref type="draft" data="RFC-ietf-dnssd-srp-25"/>
+    <xref type="rfc" data="rfc9665"/>
     <xref type="person" data="IETF_Chair"/>
   </record>
   <record>
@@ -95430,6 +95445,16 @@ reserved for use in illustrative examples in books and other documentation.</not
     <description>Groovesquid Democratic Music Control Protocol</description>
     <note>Defined TXT keys: None</note>
     <xref type="person" data="Ruben_Beltran"/>
+  </record>
+  <record date="2025-06-18">
+    <name>groupthink</name>
+    <protocol>tcp</protocol>
+    <assignee>
+      <xref type="person" data="altmobile.ai"/>
+    </assignee>
+    <description>Mobile device cluster</description>
+    <note>Defined TXT keys: None</note>
+    <xref type="person" data="Zaid_Al-Timimi"/>
   </record>
   <record>
     <name>growl</name>
@@ -101383,6 +101408,11 @@ implementations.  See RFC 3692 for details.</footnote>
       <org>Altertech</org>
       <uri>mailto:pr&amp;altertech.com</uri>
       <updated>2021-11-12</updated>
+    </person>
+    <person id="altmobile.ai">
+      <org>altmobile.ai</org>
+      <uri>mailto:admin&amp;altmobile.ai</uri>
+      <updated>2025-06-18</updated>
     </person>
     <person id="Altova">
       <org>Altova</org>
@@ -124883,6 +124913,11 @@ implementations.  See RFC 3692 for details.</footnote>
       <uri>mailto:kortenkamp&amp;cinderella.de</uri>
       <updated>2003-06</updated>
     </person>
+    <person id="Ultra_Ethernet_Consortium">
+      <name>Ultra Ethernet Consortium</name>
+      <uri>mailto:vivek.kashyap&amp;intel.com</uri>
+      <updated>2025-06-16</updated>
+    </person>
     <person id="Ulysses_G_Smith_Jr">
       <name>Ulysses G. Smith Jr.</name>
       <uri>mailto:ugsmith&amp;cesi.com</uri>
@@ -125273,6 +125308,11 @@ implementations.  See RFC 3692 for details.</footnote>
     <person id="Vitaly_Revsin_2">
       <name>Vitaly Revsin</name>
       <uri>mailto:vitaly&amp;netapp.com</uri>
+    </person>
+    <person id="Vivek_Kashyap">
+      <name>Vivek Kashyap</name>
+      <uri>mailto:vivek.kashyap&amp;intel.com</uri>
+      <updated>2025-06-16</updated>
     </person>
     <person id="Vlad_Bondarenko">
       <name>Vlad Bondarenko</name>
@@ -126121,6 +126161,12 @@ implementations.  See RFC 3692 for details.</footnote>
     <person id="Zachary_Gramana">
       <name>Zachary Gramana</name>
       <uri>mailto:contactus&amp;excitabyte.com</uri>
+    </person>
+    <person id="Zaid_Al-Timimi">
+      <name>Zaid Al-Timimi</name>
+      <org>altmobile.ai</org>
+      <uri>mailto:admin&amp;altmobile.ai</uri>
+      <updated>2025-06-18</updated>
     </person>
     <person id="Zan_Oliphant">
       <name>Zan Oliphant</name>
