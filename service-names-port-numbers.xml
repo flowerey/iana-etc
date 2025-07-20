@@ -4,7 +4,7 @@
 <registry xmlns="http://www.iana.org/assignments" id="service-names-port-numbers">
   <title>Service Name and Transport Protocol Port Number Registry</title>
   <category>Service Names and Transport Protocol Port Numbers</category>
-  <updated>2025-06-18</updated>
+  <updated>2025-07-17</updated>
   <xref type="rfc" data="rfc6335"/>
   <expert>TCP/UDP: Joe Touch; Eliot Lear, Kumiko Ono, Wes Eddy, Brian Trammell, 
 Jana Iyengar, and Michael Scharf
@@ -3812,7 +3812,27 @@ common service discovery mechanisms.</note>
   </record>
   <record>
     <description>Unassigned</description>
-    <number>288-307</number>
+    <number>288-299</number>
+  </record>
+  <record date="2025-07-15">
+    <name>tacacss</name>
+    <protocol>tcp</protocol>
+    <assignee>
+      <xref type="person" data="IESG"/>
+    </assignee>
+    <description>TLS Secure Login Host Protocol (TACACSS)</description>
+    <number>300</number>
+    <xref type="person" data="IETF_Chair"/>
+    <xref type="draft" data="RFC-ietf-opsawg-tacacs-tls13-24"/>
+  </record>
+  <record>
+    <protocol>udp</protocol>
+    <description>Reserved</description>
+    <number>300</number>
+  </record>
+  <record>
+    <description>Unassigned</description>
+    <number>301-307</number>
   </record>
   <record>
     <name>novastorbakcup</name>
@@ -79311,21 +79331,21 @@ common service discovery mechanisms.</note>
     <description>Unassigned</description>
     <number>9052-9059</number>
   </record>
-  <record date="2016-10-07">
+  <record date="2016-10-07" updated="2025-07-17">
     <name>CardWeb-IO</name>
     <protocol>tcp</protocol>
     <assignee>
-      <xref type="person" data="Virtual_Electric_Inc"/>
+      <xref type="person" data="CardWare_Inc"/>
     </assignee>
     <description>CardWeb request-response I/O exchange</description>
     <number>9060</number>
     <xref type="person" data="David_Wyatt"/>
   </record>
-  <record date="2016-10-07">
+  <record date="2016-10-07" updated="2025-07-17">
     <name>CardWeb-RT</name>
     <protocol>udp</protocol>
     <assignee>
-      <xref type="person" data="Virtual_Electric_Inc"/>
+      <xref type="person" data="CardWare_Inc"/>
     </assignee>
     <description>CardWeb realtime device data</description>
     <number>9060</number>
@@ -98687,6 +98707,16 @@ Profiling and performance analysis protocol for Shark 4.0 and BigTop.</note>
     <note>Defined TXT keys: txtvers=&lt;txtVersionNumber&gt; id=&lt;uniqueDeviceIdentifier&gt; path=&lt;wssPath&gt; seesport=&lt;portForSmartEndToEndSecurityIfSupported&gt; register=&lt;registerFlag&gt;</note>
     <xref type="person" data="Andreas_Westermann"/>
   </record>
+  <record date="2025-07-17">
+    <name>shippairing</name>
+    <protocol>tcp</protocol>
+    <assignee>
+      <xref type="person" data="EEBus_Initiative"/>
+    </assignee>
+    <description>Authenticated SHIP pairing request</description>
+    <note>Defined TXT Keys: txtvers, parType, forId, forPar, trustId, trustPar, trustCurve, type, trustNonce, alg, digest</note>
+    <xref type="person" data="Marc_Walter"/>
+  </record>
   <record>
     <name>shipsgm</name>
     <description>Swift Office Ships</description>
@@ -101692,7 +101722,8 @@ implementations.  See RFC 3692 for details.</footnote>
     </person>
     <person id="Andreas_Roene">
       <name>Andreas Roene</name>
-      <uri>mailto:support&amp;home-online.de</uri>
+      <uri>mailto:andreas.roene&amp;seolizer.de</uri>
+      <updated>2025-07-17</updated>
     </person>
     <person id="Andreas_Schwarz">
       <name>Andreas Schwarz</name>
@@ -103963,6 +103994,11 @@ implementations.  See RFC 3692 for details.</footnote>
       <name>Carbonite, Inc.</name>
       <uri>mailto:jwilkinson&amp;carbonite.com</uri>
       <updated>2019-08-23</updated>
+    </person>
+    <person id="CardWare_Inc">
+      <name>CardWare, Inc</name>
+      <uri>mailto:dwyatt&amp;cardware.com</uri>
+      <updated>2025-07-17</updated>
     </person>
     <person id="Carl_Banzhof">
       <name>Carl Banzhof</name>
@@ -106619,8 +106655,8 @@ implementations.  See RFC 3692 for details.</footnote>
     </person>
     <person id="David_Wyatt">
       <name>David Wyatt</name>
-      <uri>mailto:dwyatt&amp;vei.org</uri>
-      <updated>2016-10-07</updated>
+      <uri>mailto:dwyatt&amp;cardware.com</uri>
+      <updated>2025-07-17</updated>
     </person>
     <person id="David_Yon">
       <name>David Yon</name>
@@ -114865,6 +114901,12 @@ implementations.  See RFC 3692 for details.</footnote>
     <person id="Marc_Prud_hommeaux">
       <name>Marc Prud'hommeaux</name>
       <uri>mailto:support&amp;lexcycle.com</uri>
+    </person>
+    <person id="Marc_Walter">
+      <name>Marc Walter</name>
+      <org>EEBus Initiative</org>
+      <uri>mailto:walter&amp;eebus.org</uri>
+      <updated>2025-07-17</updated>
     </person>
     <person id="Marcel_Dube">
       <name>Marcel Dube</name>
@@ -125271,11 +125313,6 @@ implementations.  See RFC 3692 for details.</footnote>
       <name>Virgilio Lattanzi</name>
       <uri>mailto:virgilio&amp;harpax.com</uri>
       <updated>2002-07</updated>
-    </person>
-    <person id="Virtual_Electric_Inc">
-      <org>Virtual Electric Inc.</org>
-      <uri>mailto:dwyatt&amp;vei.org</uri>
-      <updated>2016-10-07</updated>
     </person>
     <person id="VirtualHere_Pty_Ltd">
       <org>VirtualHere Pty. Ltd.</org>
