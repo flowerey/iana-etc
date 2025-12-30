@@ -13,23 +13,22 @@ from contextlib import contextmanager
 from datetime import datetime
 from typing import IO, Any, Iterator, Set
 
-
-SERVICES_URL = (
-    "https://www.iana.org/assignments/service-names-port-numbers/service-names-port-numbers.xml"
-)
+SERVICES_URL = "https://www.iana.org/assignments/service-names-port-numbers/service-names-port-numbers.xml"
 SERVICES_XML = "service-names-port-numbers.xml"
 SERVICES_FILE = "services"
 SERVICES_HEADER = """# See also services(5) and IANA offical page :
-# https://www.iana.org/assignments/service-names-port-numbers/service-names-port-numbers.xhtml
+# https://www.iana.org/assignments/service-names-port-numbers
+#
+# (last updated {})
 """
 
-PROTOCOLS_URL = (
-    "https://www.iana.org/assignments/protocol-numbers/protocol-numbers.xml"
-)
+PROTOCOLS_URL = "https://www.iana.org/assignments/protocol-numbers/protocol-numbers.xml"
 PROTOCOLS_XML = "protocol-numbers.xml"
 PROTOCOLS_FILE = "protocols"
 PROTOCOLS_HEADER = """# See also protocols(5) and IANA official page :
-# https://www.iana.org/assignments/protocol-numbers/protocol-numbers.xhtml
+# https://www.iana.org/assignments/protocol-numbers
+#
+# (last updated {})
 """
 
 
@@ -37,11 +36,7 @@ PROTOCOLS_HEADER = """# See also protocols(5) and IANA official page :
 def atomic_write(filename: str, mode: str = "w") -> Iterator[IO[Any]]:
     path = os.path.dirname(filename)
     try:
-        file = tempfile.NamedTemporaryFile(
-            delete=False,
-            dir=path,
-            mode=mode,
-        )
+        file = tempfile.NamedTemporaryFile(delete=False, dir=path, mode=mode)
         yield file
         file.flush()
         os.fsync(file.fileno())
@@ -50,8 +45,10 @@ def atomic_write(filename: str, mode: str = "w") -> Iterator[IO[Any]]:
         try:
             os.remove(file.name)
         except OSError as e:
-            if e.errno != 2:
-                raise
+            if e.errno == 2:
+                pass
+            else:
+                raise e
 
 
 def compute_sha256(fname: str) -> str:
@@ -67,7 +64,7 @@ def parse_xml(source: str) -> ET.Element:
     for _, el in it:
         if "}" in el.tag:
             el.tag = el.tag.split("}", 1)[1]
-    root = it.root  # mypy: ignore
+    root = it.root
     return root
 
 
@@ -78,106 +75,94 @@ def parse_date(root_xml: ET.Element) -> datetime:
 
 
 IGNORE_PATTERN = re.compile(
-    r".*(unassigned|deprecated|reserved|historic).*",
-    flags=re.IGNORECASE,
+    r".*(unassigned|deprecated|reserved|historic).*", flags=re.IGNORECASE
 )
-
-
-def has_spaces(s: str) -> bool:
-    return re.match(r".*\s+.*", s) is not None
 
 
 def write_services_file(source: str, destination: str) -> datetime:
     root = parse_xml(source)
     updated = parse_date(root)
     seen: Set[str] = set()
-
     with atomic_write(destination) as dst:
         dst.write(SERVICES_HEADER.format(updated.strftime("%Y-%m-%d")))
-
         for r in root.iter("record"):
-            desc_el = r.find("description")
-            desc = desc_el.text if desc_el is not None and desc_el.text else ""
+            desc_ = r.find("description")
+            if desc_ is None or desc_.text is None:
+                desc = ""
+            else:
+                desc = desc_.text
 
-            name_el = r.find("name")
-            protocol_el = r.find("protocol")
-            number_el = r.find("number")
+            name_ = r.find("name")
+            protocol_ = r.find("protocol")
+            number_ = r.find("number")
 
             if (
                 IGNORE_PATTERN.match(desc)
-                or name_el is None
-                or name_el.text is None
-                or has_spaces(name_el.text)
-                or protocol_el is None
-                or protocol_el.text is None
-                or number_el is None
-                or number_el.text is None
+                or name_ is None
+                or name_.text is None
+                or has_spaces(name_.text)
+                or protocol_ is None
+                or protocol_.text is None
+                or number_ is None
+                or number_.text is None
             ):
                 continue
+            name = name_.text.lower().replace("_", "-")
+            protocol = protocol_.text.lower()
+            number = int(number_.text.split("-")[0])
 
-            name = name_el.text.lower().replace("_", "-")
-            protocol = protocol_el.text.lower()
-            number = int(number_el.text.split("-")[0])
-
-            assignments = f"{number}/{protocol}"
-            entry = f"{name:<16} {assignments:<10}"
-
+            assignments = "%s/%s" % (number, protocol)
+            entry = "%-16s %-10s" % (name, assignments)
             if entry in seen:
                 continue
-
             seen.add(entry)
             dst.write(entry)
-
-            if desc and len(desc) < 70:
-                dst.write(f" # {desc.replace('\n', '')}")
-
+            if desc != "" and len(desc) < 70:
+                dst.write(" # %s" % desc.replace("\n", ""))
             dst.write("\n")
-
     return updated
+
+
+def has_spaces(s: str) -> bool:
+    return re.match(r".*\s+.*", s) is not None
 
 
 def write_protocols_file(source: str, destination: str) -> datetime:
     root = parse_xml(source)
     updated = parse_date(root)
-
     with atomic_write(destination) as dst:
         dst.write(PROTOCOLS_HEADER.format(updated.strftime("%Y-%m-%d")))
-
         for r in root.iter("record"):
-            desc_el = r.find("description")
-            desc = desc_el.text if desc_el is not None and desc_el.text else ""
-
-            name_el = r.find("name")
-            value_el = r.find("value")
-
+            desc_ = r.find("description")
+            if desc_ is None or desc_.text is None:
+                desc = ""
+            else:
+                desc = desc_.text
+            name_ = r.find("name")
+            value_ = r.find("value")
             if (
                 IGNORE_PATTERN.match(desc)
-                or name_el is None
-                or name_el.text is None
-                or IGNORE_PATTERN.match(name_el.text)
-                or has_spaces(name_el.text)
-                or value_el is None
-                or value_el.text is None
+                or name_ is None
+                or name_.text is None
+                or IGNORE_PATTERN.match(name_.text)
+                or has_spaces(name_.text)
+                or value_ is None
+                or value_.text is None
             ):
                 continue
-
-            alias = name_el.text.split()[0]
+            alias = name_.text.split()[0]
             name = alias.lower()
-            value = int(value_el.text)
-
-            assignment = f"{value} {alias}"
-            dst.write(f"{name:<16} {assignment:<16}")
-
-            if desc and len(desc) < 70:
-                dst.write(f" # {desc.replace('\n', '')}")
-
+            value = int(value_.text)
+            assignment = "%s %s" % (value, alias)
+            dst.write("%-16s %-16s" % (name, assignment))
+            if desc != "" and len(desc) < 70:
+                dst.write(" # %s" % desc.replace("\n", ""))
             dst.write("\n")
-
     return updated
 
 
 def add_entry(tar: tarfile.TarFile, name: str, file: str) -> None:
-    def reset(tarinfo: tarfile.TarInfo) -> tarfile.TarInfo:
+    def reset(tarinfo):
         tarinfo.uid = tarinfo.gid = 0
         tarinfo.uname = tarinfo.gname = "root"
         tarinfo.mtime = 0
@@ -194,21 +179,19 @@ def download(url: str, path: str) -> None:
 
 def main() -> None:
     if len(sys.argv) < 2:
-        print(f"USAGE: {sys.argv[0]} download_path", file=sys.stderr)
+        print("USAGE: {} download_path".format(sys.argv[0]), file=sys.stderr)
         sys.exit(1)
-
     dest = sys.argv[1]
     os.makedirs(os.path.join(dest, "dist"), exist_ok=True)
 
     services_xml = os.path.join(dest, SERVICES_XML)
     protocols_xml = os.path.join(dest, PROTOCOLS_XML)
-
     try:
         download(SERVICES_URL, services_xml)
         download(PROTOCOLS_URL, protocols_xml)
     except OSError as e:
         print(
-            f"Could not download iana service names and port numbers: {e}",
+            "Could not download iana service names and port numbers: {}".format(e),
             file=sys.stderr,
         )
         sys.exit(1)
@@ -221,18 +204,16 @@ def main() -> None:
 
     version = max(services_xml_date, protocols_xml_date).strftime("%Y%m%d")
 
-    name = f"iana-etc-{version}"
-    tarball = os.path.join(dest, "dist", f"{name}.tar.gz")
-
+    name = "iana-etc-%s" % version
+    tarball = os.path.join(dest, "dist", name + ".tar.gz")
     with tarfile.open(tarball, "w:gz") as tar:
         add_entry(tar, name, services_xml)
         add_entry(tar, name, services_file)
         add_entry(tar, name, protocols_xml)
         add_entry(tar, name, protocols_file)
 
-    with atomic_write(
-        os.path.join(dest, f"dist/iana-etc-{version}.tar.gz.sha256")
-    ) as f:
+    sha_path = os.path.join(dest, "dist/iana-etc-%s.tar.gz.sha256" % version)
+    with atomic_write(sha_path) as f:
         f.write(compute_sha256(tarball))
 
     with atomic_write(os.path.join(dest, ".version")) as f:
