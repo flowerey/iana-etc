@@ -1,14 +1,13 @@
 # IANA-ETC
-[![Build Status](https://travis-ci.org/Mic92/iana-etc.svg?branch=master)](https://travis-ci.org/Mic92/iana-etc)
 
-Tracks changes daily of IANA's Assigned Internet Protocol Numbers using git
-and build /etc/protocols and /etc/services files using travis-ci.
+Tracks daily changes to IANA’s Assigned Internet Protocol Numbers using Git, and builds `/etc/protocols` and `/etc/services` files via GitHub Actions.
+
 New [releases](https://github.com/Mic92/iana-etc/releases) are created automatically.
 
-## USAGE
+## Usage
 
-The script requires python3 without any additional dependencies:
+The script requires Python 3 with no additional dependencies:
 
-```
-$ python3 update.py out
+```sh
+python3 update.py out
 ```
